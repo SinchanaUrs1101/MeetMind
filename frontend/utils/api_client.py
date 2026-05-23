@@ -1,7 +1,10 @@
 import os
 import requests
 
-API_URL = os.getenv("API_URL", "http://backend:8000")
+API_URL = os.getenv(
+    "BACKEND_URL",
+    "https://meetmind-backend-dpp8.onrender.com"
+)
 
 
 class APIClient:
