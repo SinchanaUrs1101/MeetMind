@@ -382,4 +382,10 @@ For issues and questions:
 
 ---
 
+database testing:  docker exec -it meetmind_db psql -U meetmind_user -d meetmind_db
+\dt : show all tables
+\d meetings : see table structure
+\x : expanded view
+SELECT * FROM meetings;
+
 **Happy Meeting Minutes Extraction! 🎯**
