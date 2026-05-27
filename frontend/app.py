@@ -104,12 +104,7 @@ with analytics_col2:
     st.write(f"**Owners engaged:** {len(owners)}")
     st.write(f"**AI health:** {health_status.get('status', 'unknown')}" )
     st.write(f"**Last sync:** {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}" )
-    st.download_button(
-        "Export History",
-        json.dumps(meetings, default=str, indent=2),
-        file_name="meetmind_meetings.json",
-        mime="application/json",
-    )
+    
 
 st.markdown("---")
 
