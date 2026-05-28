@@ -321,7 +321,7 @@ if selected_key:
             st.error(f"Error updating action item: {result['error']}")
         else:
             st.success("✅ Action item updated successfully.")
-            st.experimental_rerun()
+            st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)
