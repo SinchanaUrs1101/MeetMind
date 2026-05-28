@@ -511,8 +511,3 @@ with dl1:
 with dl2:
     st.download_button("📃 DOCX", docx_bytes, file_name=docx_name,
                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-with dl3:
-    st.download_button("📑 PDF", pdf_bytes, file_name=pdf_name, mime="application/pdf")
-with dl4:
-    st.download_button("📄 JSON", json.dumps(export_payload, indent=2, default=str),
-                       file_name="meeting_minutes.json", mime="application/json")
