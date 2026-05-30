@@ -237,6 +237,38 @@ hr { border-color: rgba(255,255,255,0.08) !important; }
   padding: 18px 22px;
   margin-top: 24px;
 }
+
+/* ── Extraction error card ── */
+.extraction-error {
+  background: rgba(20, 5, 10, 0.85);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-top: 20px;
+}
+.err-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.err-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: hsl(40, 6%, 95%);
+  margin-bottom: 10px;
+}
+.err-body {
+  font-size: 14px;
+  color: hsl(40, 6%, 80%);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+.err-hint {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 16px;
+  font-size: 13px;
+  color: hsl(40, 6%, 68%);
+  line-height: 1.8;
+}
 </style>
 """, unsafe_allow_html=True)
 
