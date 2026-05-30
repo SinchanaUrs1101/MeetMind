@@ -6,11 +6,11 @@ A .env file is loaded automatically in development.
 """
 from __future__ import annotations
 
+import json
 import os
-import secrets
 import warnings
 from functools import lru_cache
-from typing import List
+from typing import Any, List
 
 from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -41,7 +41,10 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
     # ── CORS ──────────────────────────────────────────────────────────────
-    CORS_ORIGINS: List[str] = [
+    # Accepts either a JSON array string or a comma-separated string:
+    #   JSON:  '["https://foo.com","https://bar.com"]'
+    #   Plain: 'https://foo.com,https://bar.com'
+    CORS_ORIGINS: Any = [
         "http://localhost:8501",
         "http://frontend:8501",
     ]
@@ -64,6 +67,48 @@ class Settings(BaseSettings):
     API_PORT: int = 8000
 
     # ── Validators ────────────────────────────────────────────────────────
+    @field_validator("CORS_ORIGINS", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v: Any) -> List[str]:
+        """Accept a JSON array string, a comma-separated string, or a list."""
+        if isinstance(v, list):
+            return v
+        if isinstance(v, str):
+            v = v.strip()
+            if not v:
+                return []
+            # Try JSON first (e.g. '["https://foo.com"]')
+            if v.startswith("["):
+                try:
+                    parsed = json.loads(v)
+                    if isinstance(parsed, list):
+                        return [str(i).strip() for i in parsed]
+                except json.JSONDecodeError:
+                    pass
+            # Fall back to comma-separated (e.g. 'https://foo.com,https://bar.com')
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        return [str(v)]
+
+    @field_validator("CORS_ALLOW_METHODS", "CORS_ALLOW_HEADERS", mode="before")
+    @classmethod
+    def parse_list_fields(cls, v: Any) -> List[str]:
+        """Same flexible parsing for other list fields."""
+        if isinstance(v, list):
+            return v
+        if isinstance(v, str):
+            v = v.strip()
+            if not v:
+                return []
+            if v.startswith("["):
+                try:
+                    parsed = json.loads(v)
+                    if isinstance(parsed, list):
+                        return [str(i).strip() for i in parsed]
+                except json.JSONDecodeError:
+                    pass
+            return [item.strip() for item in v.split(",") if item.strip()]
+        return [str(v)]
+
     @field_validator("JWT_SECRET_KEY")
     @classmethod
     def warn_weak_secret(cls, v: str) -> str:
