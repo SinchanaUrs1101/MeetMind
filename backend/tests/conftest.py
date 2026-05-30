@@ -1,7 +1,7 @@
 import os
 os.environ.setdefault("JWT_SECRET_KEY", "test-secret-key-for-tests-only-32chars!!")
 os.environ.setdefault("ADMIN_USERNAME", "admin")
-os.environ.setdefault("ADMIN_EMAIL",    "admin@meetmind.local")
+os.environ.setdefault("ADMIN_EMAIL",    "admin@meetmind-app.com")
 os.environ.setdefault("ADMIN_PASSWORD", "Admin@12345!")
 
 import pytest
@@ -33,7 +33,7 @@ def setup_database():
     with TestingSessionLocal() as db:
         if get_user_by_username(db, "admin") is None:
             create_user(db, UserRegister(
-                email="admin@meetmind.local",
+                email="admin@meetmind-app.com",
                 username="admin",
                 password="Admin@12345!",
                 role=UserRole.ADMIN,

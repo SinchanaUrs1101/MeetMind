@@ -114,18 +114,21 @@ def _seed_admin():
     from app.models.user import UserRole
 
     admin_username = os.environ.get("ADMIN_USERNAME", "admin")
-    admin_email    = os.environ.get("ADMIN_EMAIL",    "admin@meetmind.local")
+    admin_email    = os.environ.get("ADMIN_EMAIL", "admin@meetmind-app.com")
     admin_password = os.environ.get("ADMIN_PASSWORD", "Admin@12345!")
 
     with Session(engine) as db:
         if get_user_by_username(db, admin_username) is None:
-            create_user(db, UserRegister(
-                email=admin_email,
-                username=admin_username,
-                password=admin_password,
-                role=UserRole.ADMIN,
-            ))
-            logger.info("Default admin created: username=%s", admin_username)
+            try:
+                create_user(db, UserRegister(
+                    email=admin_email,
+                    username=admin_username,
+                    password=admin_password,
+                    role=UserRole.ADMIN,
+                ))
+                logger.info("Default admin created: username=%s", admin_username)
+            except Exception as exc:
+                logger.warning("Could not seed admin user (non-fatal): %s", exc)
 
 
 # Routes
