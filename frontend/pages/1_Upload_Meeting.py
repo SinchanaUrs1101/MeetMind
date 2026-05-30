@@ -508,20 +508,6 @@ def _render_results(result: dict, meeting_title: str) -> None:
         filename=docx_name, timestamp=timestamp,
     )
 
-    st.markdown("---")
-    dl1, dl2, dl3, dl4 = st.columns(4)
-    with dl1:
-        st.download_button("📄 JSON", json.dumps(export_payload, default=str, indent=2),
-                           file_name="meetmind_minutes.json", mime="application/json")
-    with dl2:
-        st.download_button("📝 Summary TXT", editable_summary,
-                           file_name="meetmind_summary.txt", mime="text/plain")
-    with dl3:
-        st.download_button("📑 PDF", pdf_bytes, file_name=pdf_name, mime="application/pdf")
-    with dl4:
-        st.download_button("📃 DOCX", docx_bytes, file_name=docx_name,
-                           mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-
 
 # ── Submit logic ──────────────────────────────────────────────────────────
 if submit:
